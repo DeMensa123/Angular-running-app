@@ -1,0 +1,153 @@
+<div class="row">
+  <div class="form-inline col-md">
+    <h2 class="mb-4">Stanoviská</h2>
+    <div class="d-flex mb-3">
+      <select
+        class="col form-select me-3"
+        id="stanovisko_select"
+        name="stanica"
+        [(ngModel)]="stanovisko.stanica"
+      >
+        <option [ngValue]="undefined" disabled style="display: none">
+          Dostupné stanoviská
+        </option>
+        <option *ngFor="let stanica of stanice" [ngValue]="stanica">
+          {{ stanica.nazov }}
+        </option>
+      </select>
+      <button
+        class="col btn btn-outline-yellow"
+        type="button"
+        id="stanovisko_btn"
+        (click)="onClickForm()"
+        [disabled]="stanovisko.stanica === undefined"
+      >
+        Vyber stanovisko
+      </button>
+    </div>
+    <p *ngIf="stanoviskoControl" class="text-danger fw-bold">
+      Táto stanica je už pridaná !
+    </p>
+
+    <form
+      (submit)="addStanovisko(form)"
+      #form="ngForm"
+      *ngIf="showForm && stanovisko"
+      class="mt-4"
+      [class.was-validated]="form.submitted || form.touched"
+    >
+      <div class="mb-3 form-check">
+        <input
+          type="checkbox"
+          name="obcerstvenie"
+          class="form-check-input"
+          id="exampleCheck1"
+          [(ngModel)]="stanovisko.obcerstvenie"
+        />
+        <label class="form-check-label" for="exampleCheck1">Občerstvenie</label>
+      </div>
+      <div class="mb-3 form-check">
+        <input
+          type="checkbox"
+          name="lekar"
+          class="form-check-input"
+          id="exampleCheck1"
+          [(ngModel)]="stanovisko.lekar"
+        />
+        <label class="form-check-label" for="exampleCheck1"
+          >Lekárska pomoc</label
+        >
+      </div>
+
+      <button
+        class="col btn btn-outline-yellow mr-3 dropdown"
+        type="submit"
+        id="stanovisko_btn"
+      >
+        Pridať stanovisko
+      </button>
+    </form>
+  </div>
+  <div class="col-md rounded mx-0 mx-md-5">
+    <table class="table">
+      <thead>
+        <tr class="fw-bold">
+          <td>Dostupné stanoviská</td>
+          <td>Poradie</td>
+          <td>Detail</td>
+          <td>Odstrániť</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of stanoviska">
+          <td>{{ item.stanica?.nazov }}</td>
+          <td>{{ item.poradie }}</td>
+          <td>
+            <a role="button" (click)="open(content, item)"
+              ><i class="fa-solid fa-edit"></i
+            ></a>
+          </td>
+
+          <td>
+            <a role="button" (click)="delete(item)"
+              ><i class="fa-solid fa-trash"></i
+            ></a>
+          </td>
+
+          <ng-template #content let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">
+                {{ item.stanica?.nazov }}
+              </h4>
+              <span
+                type="button"
+                class="close"
+                aria-label="Close"
+                (click)="modal.dismiss('Cross click')"
+              >
+                <i class="fa-solid fa-xmark fs-5"></i>
+              </span>
+            </div>
+            <div class="modal-body row">
+              <div class="col">
+                <p>Občerstvenie:</p>
+                <p>Lekár:</p>
+                <p>Prevýšenie (m):</p>
+                <p>Vzdialenosť predchádzajúceho stanoviska (km):</p>
+              </div>
+              <div class="col">
+                <p>
+                  <a *ngIf="item.obcerstvenie"
+                    ><i class="fa-solid fa-check"></i
+                  ></a>
+                  <a *ngIf="!item.obcerstvenie"
+                    ><i class="fa-solid fa-xmark"></i
+                  ></a>
+                </p>
+                <p>
+                  <a *ngIf="item.lekar"><i class="fa-solid fa-check"></i></a>
+                  <a *ngIf="!item.lekar"><i class="fa-solid fa-xmark"></i></a>
+                </p>
+                <p>{{ item.prevysenie }}</p>
+                <p>{{ item.vzdialenostPredStanoviska }}</p>
+              </div>
+            </div>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="stanoviska && stanoviska.length < 2" class="text-danger fw-bold">
+      Minimálny počet stanovísk je 2 !
+    </p>
+    <button
+      routerLink="/behy"
+      (click)="checkStanovisko()"
+      id="pridat_beh"
+      type="submit"
+      class="btn btn-yellow"
+      [disabled]="stanoviska && stanoviska.length < 2"
+    >
+      Pridať beh
+    </button>
+  </div>
+</div>

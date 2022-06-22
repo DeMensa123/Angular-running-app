@@ -1,0 +1,35 @@
+<table class="table">
+  <thead>
+    <tr class="fw-bold">
+      <td>Dostupné stanoviská</td>
+      <td>Poradie</td>
+      <td>Občerstvenie</td>
+      <td>Lekár</td>
+      <td>Prevýšenie (m)</td>
+      <td>Vzdialenosť predchádzajúceho stanoviska (km)</td>
+      <td>Odstrániť</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of stanoviska">
+      <td>{{ item.stanica?.nazov }}</td>
+      <td>{{ item.poradie }}</td>
+      <td>
+        <a *ngIf="item.obcerstvenie"><i class="fa-solid fa-check"></i></a>
+        <a *ngIf="!item.obcerstvenie"><i class="fa-solid fa-xmark"></i></a>
+      </td>
+      <td>
+        <a *ngIf="item.lekar"><i class="fa-solid fa-check"></i></a>
+        <a *ngIf="!item.lekar"><i class="fa-solid fa-xmark"></i></a>
+      </td>
+
+      <td>{{ item.prevysenie }}</td>
+      <td>{{ item.vzdialenostPredStanoviska }}</td>
+      <td>
+        <a role="button" (click)="delete(item)"
+          ><i class="fa-solid fa-trash"></i
+        ></a>
+      </td>
+    </tr>
+  </tbody>
+</table>

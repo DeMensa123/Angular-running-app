@@ -1,0 +1,72 @@
+<h2 class="mb-4">Zoznam dostupných behov</h2>
+<p class="fs-5">Vyberte si z dostupných behov</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Názov</th>
+      <th scope="col">Dátum konania</th>
+      <th scope="col">Kapacita</th>
+      <th scope="col">Počet prihlásených</th>
+      <th scope="col">Základná cena (€/os.)</th>
+      <th scope="col">Cena batožiny (€)</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let run of runs">
+    <tr data-bs-toggle="collapse" data-bs-target="#run-details" class="toggle">
+      <td>{{ run.nazov }}</td>
+      <td>{{ run.datum | date: "dd.MM.YYYY hh:mm" }}</td>
+      <td>{{ run.kapacita }}</td>
+      <td>{{ run.prihlaseni }}</td>
+      <td>{{ run.zakladnaCenaBehu }}</td>
+      <td>{{ run.cenaBatozina }}</td>
+      <td>
+        <a
+          role="button"
+          [routerLink]="['beh', run.id, 'stanoviska']"
+          (click)="saveRun(run.id)"
+          >Zobraziť stanoviská</a
+        >
+      </td>
+      <td>
+        <a role="button" (click)="open(content)"
+          ><i class="fa-solid fa-edit"></i
+        ></a>
+      </td>
+      <td>
+        <a role="button" (click)="delete(run)"
+          ><i class="fa-solid fa-trash"></i
+        ></a>
+      </td>
+
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">
+            {{ run.nazov }}
+          </h4>
+          <span
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+          >
+            <i class="fa-solid fa-xmark fs-5"></i>
+          </span>
+        </div>
+        <div class="modal-body row">
+          <div class="col">
+            <p>Občerstvovacie stanice:</p>
+            <p>Lekárske stanice:</p>
+            <p>Celkové prevýšenie (m):</p>
+            <p>Celková vzdialenosť (km):</p>
+          </div>
+          <div class="col">
+            <p>{{ countObcerstvenie(run) }}</p>
+            <p>{{ countLekar(run) }}</p>
+            <p>{{ countPrevysenie(run) }}</p>
+            <p>{{ countVzdialenost(run) }}</p>
+          </div>
+        </div>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

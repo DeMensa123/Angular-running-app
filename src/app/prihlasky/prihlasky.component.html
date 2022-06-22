@@ -1,0 +1,26 @@
+<h2 class="mb-4">Zoznam prihlášok</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Názov behu</th>
+      <th scope="col">Dátum konania</th>
+      <th scope="col">Názov tímu</th>
+      <th scope="col">Počet členov tímu</th>
+      <th scope="col">Celková cena (€)</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let prihlaska of prihlasky">
+    <tr data-bs-toggle="collapse" data-bs-target="#run-details" class="toggle">
+      <td>{{ prihlaska.beh.nazov }}</td>
+      <td>{{ prihlaska.beh.datum | date: "dd.MM.YYYY hh:mm" }}</td>
+      <td>{{ prihlaska.tim.nazov }}</td>
+      <td>{{ prihlaska.pocetClenovTimu }}</td>
+      <td>{{ prihlaska.celkovaCena }}</td>
+      <td>
+        <a role="button" (click)="delete(prihlaska)"
+          ><i class="fa-solid fa-trash"></i
+        ></a>
+      </td>
+    </tr>
+  </tbody>
+</table>

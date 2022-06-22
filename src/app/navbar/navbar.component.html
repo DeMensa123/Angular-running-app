@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+  <div class="container">
+    <i class="fa-solid fa-person-running text-yellow fs-4 me-2"></i>
+    <a
+      class="navbar-brand fw-bold text-black"
+      routerLink="home"
+      routerLinkActive="active"
+      >BehajmeSpolu</a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle fw-bold text-black"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Behy
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="behy"
+                >Zoznam dostupných behov</a
+              >
+            </li>
+
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" routerLink="novy-beh"
+                >Vytvoriť nový beh</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a
+            role="button"
+            routerLink="login"
+            class="nav-link fw-bold text-black"
+            routerLink="prihlasky"
+            tabindex="-1"
+            >Prihlášky</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link disabled fw-bold text-black" href="#" tabindex="-1"
+            >O pretekoch</a
+          >
+        </li>
+      </ul>
+
+      <span *ngIf="tim$ | async as tim; else logoutTmp">
+        <span class="nav-item mx-3"
+          >Ste prihlásený ako <span class="fw-bold">{{ tim.nazov }}</span></span
+        >
+        <button
+          class="btn btn-outline-yellow fw-bold"
+          (click)="logout()"
+          type="submit"
+        >
+          Odhlásiť sa
+        </button>
+      </span>
+
+      <ng-template #logoutTmp>
+        <a
+          class="nav-link fw-bold text-black"
+          role="button"
+          routerLink="login"
+          tabindex="-1"
+          aria-disabled="true"
+          >Prihlásenie</a
+        >
+        <button
+          class="btn btn-outline-yellow fw-bold"
+          routerLink="registracia"
+          type="submit"
+        >
+          Registrácia tímu
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</nav>

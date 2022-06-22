@@ -1,0 +1,89 @@
+<!-- <app-new-run-form [run]="item" (submit)="submit($event)"></app-new-run-form> -->
+<h2 class="mb-4">Vytvorenie nového behu</h2>
+<div class="row">
+  <form
+    (submit)="submit(form)"
+    #form="ngForm"
+    *ngIf="run"
+    class="col-md"
+    [class.was-validated]="form.submitted || form.touched"
+  >
+    <div class="mb-3">
+      <label class="form-label">Názov behu</label>
+      <input
+        type="text"
+        class="form-control"
+        name="nazov"
+        [(ngModel)]="run.nazov"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Dátum konania behu</label>
+      <input
+        type="date"
+        class="form-control"
+        name="datum"
+        [(ngModel)]="run.datum"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Maximálny počet bežcov (kapacita)</label>
+      <input
+        type="number"
+        min="0"
+        max="1000"
+        class="form-control"
+        name="kapacita"
+        (change)="
+          run.kapacita && run.kapacita < 0 ? (run.kapacita = 0) : run.kapacita;
+          run.kapacita && run.kapacita > 1000
+            ? (run.kapacita = 1000)
+            : run.kapacita
+        "
+        [(ngModel)]="run.kapacita"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Cena prepravy batožiny (€)</label>
+      <input
+        type="number"
+        class="form-control"
+        name="cenaBatozina"
+        [(ngModel)]="run.cenaBatozina"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Základná cena behu (€/os.)</label>
+      <input
+        type="number"
+        class="form-control"
+        name="zakladnaCenaBehu"
+        [(ngModel)]="run.zakladnaCenaBehu"
+        (change)="
+          run.zakladnaCenaBehu && run.zakladnaCenaBehu < 0
+            ? (run.zakladnaCenaBehu = 0)
+            : run.zakladnaCenaBehu;
+          run.zakladnaCenaBehu && run.zakladnaCenaBehu > 100
+            ? (run.zakladnaCenaBehu = 100)
+            : run.zakladnaCenaBehu
+        "
+        required
+      />
+    </div>
+
+    <button id="pridat_beh" type="submit" class="btn btn-yellow mb-4 mb-md-0">
+      Pridať stanoviská
+    </button>
+  </form>
+  <div class="col-md ms-0 ms-md-5">
+    <img
+      src="./assets/images/runners.png"
+      class="img-fluid rounded shadow opacity-75"
+      alt="..."
+    />
+  </div>
+</div>

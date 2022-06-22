@@ -1,0 +1,29 @@
+<h2 class="col mb-4">Registrácia tímu</h2>
+
+<form (submit)="submit(form)" #form="ngForm">
+  <div class="mb-3">
+    <label class="form-label">Názov tímu</label>
+    <input
+      type="email"
+      class="form-control"
+      [(ngModel)]="tim.nazov"
+      name="username"
+      required
+      placeholder="name@example.com"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Heslo</label>
+    <input
+      type="password"
+      class="form-control"
+      [(ngModel)]="tim.heslo"
+      name="password"
+      required
+      placeholder="Password"
+    />
+  </div>
+
+  <button class="btn btn-yellow" type="submit">Registrácia tímu</button>
+</form>

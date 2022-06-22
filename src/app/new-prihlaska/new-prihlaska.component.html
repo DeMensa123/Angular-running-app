@@ -1,0 +1,88 @@
+<!-- <app-new-run-form [run]="item" (submit)="submit($event)"></app-new-run-form> -->
+<h2 class="mb-4">Prihlásiť sa na beh</h2>
+<div class="row">
+  <form
+    (submit)="submit(form)"
+    #form="ngForm"
+    class="col-md"
+    [class.was-validated]="form.submitted || form.touched"
+  >
+    <div class="mb-3">
+      <label class="form-label">Beh</label>
+
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="beh"
+        [(ngModel)]="prihlaska.beh"
+      >
+        <option [ngValue]="undefined" disabled style="display: none">
+          Dostupné behy
+        </option>
+        <option *ngFor="let run of runs" [ngValue]="run">
+          {{ run.nazov }}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Počet členov tímu (max 5)</label>
+      <input
+        type="number"
+        class="form-control"
+        name="kapacita"
+        [(ngModel)]="prihlaska.pocetClenovTimu"
+        (change)="
+          prihlaska.pocetClenovTimu && prihlaska.pocetClenovTimu < 0
+            ? (prihlaska.pocetClenovTimu = 0)
+            : prihlaska.pocetClenovTimu;
+          countPrice()
+        "
+        required
+      />
+    </div>
+    <p
+      *ngIf="prihlaska && prihlaska.pocetClenovTimu > 5"
+      class="text-danger fw-bold"
+    >
+      Maximálny počet členov tímu je 5 !
+    </p>
+    <div class="mb-3 form-check">
+      <input
+        type="checkbox"
+        name="batozina"
+        class="form-check-input"
+        (change)="countPrice()"
+        [(ngModel)]="prihlaska.batozina"
+      />
+      <label class="form-check-label">Batožina</label>
+    </div>
+    <div class="mb-3">
+      <h5>Celková cena behu: {{ prihlaska.celkovaCena }} €</h5>
+    </div>
+
+    <button type="submit" class="btn btn-yellow">Odoslať prihlášku</button>
+    <p
+      *ngIf="
+        prihlaska &&
+        prihlaska.beh &&
+        prihlaska.beh.kapacita -
+          prihlaska.beh.prihlaseni -
+          prihlaska.pocetClenovTimu <
+          0
+      "
+      class="text-danger fw-bold mt-3"
+    >
+      Prekročili ste kapacitu !
+    </p>
+    <p *ngIf="checkDuplicates()" class="text-danger fw-bold mt-3">
+      Na tento beh už máte podanú prihlášku !
+    </p>
+  </form>
+  <div class="col-md ms-5">
+    <img
+      src="./assets/images/runners.png"
+      class="img-fluid rounded shadow opacity-75"
+      alt="..."
+    />
+  </div>
+</div>
